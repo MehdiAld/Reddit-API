@@ -1,8 +1,8 @@
 import { mongoose, Schema } from "mongoose";
 
 const postsSchema = new Schema({
-  texte: String,
-  Img: String,
+  text: String,
+  img: String,
 });
 
 const SubRedditSchema = new Schema({
