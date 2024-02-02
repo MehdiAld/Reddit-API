@@ -6,6 +6,7 @@ const port = process.env.PORT;
 
 import mongoose from "mongoose";
 import userRouter from "./Routes/userRoute";
+import SubRedditRouter from "./Routes/subRedditRoute";
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.get("/", (req, res) => console.log("BIENVENUE SUR REDDIT"));
 
+app.use("/subreddit", SubRedditRouter)
 app.use("/auth", userRouter);
 app.listen(port, () =>
   console.log(`[SERVER] is running on http://localhost:${port}`)
