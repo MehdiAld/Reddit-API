@@ -86,9 +86,36 @@ const addPostInSubReddit = async (req, res) => {
   }
 };
 
+const createPostInSubReddit = async (req, res) => {
+  const { subredditId } = req.params;
+  const { text, img } = req.body;
+
+  try {
+    const subreddit = await SubReddit.findById(subredditId);
+
+    if (!subreddit) {
+      return res.status(404).json({ message: "Subreddit not found" });
+    }
+
+    const newPost = new Post({ text, img });
+
+    subreddit.posts.push(newPost);
+
+    await subreddit.save();
+
+    res
+      .status(201)
+      .json({ message: "New post added to subreddit", post: newPost });
+  } catch (error) {
+    console.error("Error adding post to subreddit:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export {
   ShowAllSubReddit,
   createSubReddit,
   DeleteSubReddit,
   addPostInSubReddit,
+  createPostInSubReddit,
 };

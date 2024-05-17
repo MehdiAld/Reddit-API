@@ -5,14 +5,16 @@ import {
   editPost,
   removePost,
 } from "../Controllers/postController";
+
+import { authMiddleware } from "../middlewares/auth";
 const postRouter = Router();
 
 postRouter.get("/all", showALLPost);
 
-postRouter.post("/add", createPost);
+postRouter.post("/add", authMiddleware, createPost);
 
-postRouter.get("/edit/", editPost);
+postRouter.put("/edit/:id", authMiddleware, editPost);
 
-postRouter.delete("/delete/", removePost);
+postRouter.delete("/delete/:id", authMiddleware, removePost);
 
 export default postRouter;
